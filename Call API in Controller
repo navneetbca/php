@@ -1,0 +1,25 @@
+   // Calling RestAPI using php
+    public function home(){
+
+        // create & initialize a curl session
+        $curl = curl_init();
+
+        // set our url with curl_setopt()
+        curl_setopt($curl, CURLOPT_URL, 'http://192.168.1.38/MasterDashboard/home1');
+        // return the transfer as a string, also with setopt()
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        
+        // curl_exec() executes the started curl session
+        // $output contains the output string
+        $introData = curl_exec($curl);
+        
+        // close curl resource to free up system resources
+        // (deletes the variable made by curl_init)
+        curl_close($curl);
+
+        // Converting object to array by adding true
+        $arr['homeData'] = json_decode($introData , true);
+        
+        // Sending data while loading the view
+        $this->load->view('homeView', $arr);
+    }
